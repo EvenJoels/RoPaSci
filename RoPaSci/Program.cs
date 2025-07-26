@@ -3,9 +3,7 @@ using System;
 
 public class Program
 {
-    /// <summary>
-    /// Moves ENUM
-    /// </summary>  
+
     public enum Move
     {
         Rock,
@@ -30,16 +28,17 @@ public class Program
     private static List<Move>? AllowedMoves;
     private static RandAI? SelectedAI;
 
-    // constructor to initialize the LosingMoves dictionary
+ 
     static Program()
     {
-        LosingMoves = new Dictionary<Move, List<Move>>();
-        foreach (var move in WinningMoves.Keys)
+        LosingMoves = [];
+        foreach (Move move in WinningMoves.Keys)
         {
-            LosingMoves[move] = WinningMoves.Where(kv => kv.Value.Contains(move)).Select(kv => kv.Key).ToList();
+            LosingMoves[move] = WinningMoves.Where(
+                kv => kv.Value.Contains(move)
+                ).Select(kv => kv.Key).ToList();
         }
     }
-
 
     public static void Main(string[] args)
     {

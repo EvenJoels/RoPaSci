@@ -63,8 +63,6 @@ namespace RoPaSci
                     // If no valid losing moves, fallback to random move
                     return GetRandomMove();
                 }
-
-
             }
             else
             {
