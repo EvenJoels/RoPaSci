@@ -154,7 +154,6 @@ namespace RoPaSci
             Console.Title = "RoPaSci - A Rock Paper Scissors Game";
             Console.CursorVisible = false;
 
-            // Could add settings like window size, but remember to use Try catch
         }
 
         public static void ShowWelcomeScreen()
@@ -218,7 +217,6 @@ namespace RoPaSci
             Console.ResetColor();
             // Here you would capture the input and handle the move selection
             int choice = -1;
-            
             while (choice < 1 || choice > allowedMoves.Count)
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
@@ -285,6 +283,11 @@ namespace RoPaSci
             };
         }
 
+
+        /// <summary>
+        /// Prints the ASCII art for the player's move and the AI's move side by side.
+        /// This was generated using GitHub Copilot.
+        /// </summary>
         public static void PrintMoves(Move playerMove, Move aiMove)
         {
             Console.Clear();
