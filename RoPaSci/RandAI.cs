@@ -8,7 +8,8 @@ namespace RoPaSci
 {
     internal class RandAI
     {
-        private List<Program.Move> allowedMoves;
+        // Change the access modifier of allowedMoves from private to protected
+        protected List<Program.Move> allowedMoves;
 
         public RandAI(List<Program.Move> allowedMoves)
         {
@@ -46,8 +47,24 @@ namespace RoPaSci
         {
             if (lastChoice.HasValue)
             {
-                // Use the last choice logic to determine the next move
-                return lastChoice.Value;
+                // Use the last choice logic to determine the next move using losing moves from allowed moves
+                var losingMoves = Program.LosingMoves[lastChoice.Value];
+                // Filter losing moves to only those that are allowed
+                var validLosingMoves = losingMoves.Where(move => allowedMoves.Contains(move)).ToList();
+                if (validLosingMoves.Count > 0)
+                {
+                    // Randomly select one of the valid losing moves
+                    Random random = new();
+                    int index = random.Next(validLosingMoves.Count);
+                    return validLosingMoves[index];
+                }
+                else
+                {
+                    // If no valid losing moves, fallback to random move
+                    return GetRandomMove();
+                }
+
+
             }
             else
             {

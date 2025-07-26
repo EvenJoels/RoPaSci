@@ -16,8 +16,29 @@ public class Program
         None
     }
 
+    public static readonly Dictionary<Move, List<Move>> WinningMoves = new()
+    {
+        { Move.Rock, [Move.Scissors, Move.Lizard] },
+        { Move.Paper, [Move.Rock, Move.Spock] },
+        { Move.Scissors, [Move.Paper, Move.Lizard] },
+        { Move.Lizard, [Move.Spock, Move.Paper] },
+        { Move.Spock, [Move.Scissors, Move.Rock] }
+    };
+
+    public static readonly Dictionary<Move, List<Move>> LosingMoves;
+
     private static List<Move>? AllowedMoves;
     private static RandAI? SelectedAI;
+
+    // constructor to initialize the LosingMoves dictionary
+    static Program()
+    {
+        LosingMoves = new Dictionary<Move, List<Move>>();
+        foreach (var move in WinningMoves.Keys)
+        {
+            LosingMoves[move] = WinningMoves.Where(kv => kv.Value.Contains(move)).Select(kv => kv.Key).ToList();
+        }
+    }
 
 
     public static void Main(string[] args)
@@ -81,6 +102,23 @@ public class Program
             Console.WriteLine($"\nYou chose: {playerMove}");
             Console.WriteLine($"AI chose: {aiMove}");
 
+            if (playerMove == aiMove)
+            {
+                Console.WriteLine("It's a tie!");
+            }
+            else if (WinningMoves[playerMove].Contains(aiMove))
+            {
+                Console.WriteLine("You win!");
+            }
+            else if (WinningMoves[aiMove].Contains(playerMove))
+            {
+                Console.WriteLine("AI wins!");
+            }
+            else
+            {
+                // Something went wrong, perhaps invalid move
+                continue;
+            }
 
             // Update AI knowledge with player move
             SelectedAI.UpdateKnowledge(playerMove);
