@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Program;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace RoPaSci
 {
@@ -237,6 +238,13 @@ namespace RoPaSci
             
         }
 
+        public static void ShowOutcome(string outcome)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            WriteCentredText(outcome, Console.WindowHeight - 4);
+            Console.ResetColor();
+        }
+
         public static void AskToPlayAgain()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -279,18 +287,45 @@ namespace RoPaSci
 
         public static void PrintMoves(Move playerMove, Move aiMove)
         {
-            // Should display the ascii art for both moves side by side
             Console.Clear();
+            string playerLabel = "You:";
+            string aiLabel = "AI:";
+
+            string playerArt = GetMoveArt(playerMove);
+            string aiArt = GetMoveArt(aiMove);
+            string[] playerLines = playerArt.Split([Environment.NewLine], StringSplitOptions.None);
+            string[] aiLines = aiArt.Split([Environment.NewLine], StringSplitOptions.None);
+
+            int playerWidth = playerLines.Max(l => l.Length);
+            int aiWidth = aiLines.Max(l => l.Length);
+            int separation = 6; // Space between the two arts
+
+            int totalWidth = playerWidth + separation + aiWidth;
+            int leftPad = Math.Max(0, (Console.WindowWidth - totalWidth) / 2);
+
+            // Print labels centered above each art
+            Console.SetCursorPosition(leftPad + (playerWidth - playerLabel.Length) / 2, 0);
             Console.ForegroundColor = ConsoleColor.Yellow;
-            WriteCentredText("Your Move:", 2);
+            Console.Write(playerLabel);
+
+            Console.SetCursorPosition(leftPad + playerWidth + separation + (aiWidth - aiLabel.Length) / 2, 0);
+            Console.Write(aiLabel);
+            Console.WriteLine();
+
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(GetMoveArt(playerMove));
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            WriteCentredText("AI's Move:", 2 + GetMoveArt(playerMove).Split('\n').Length + 1);
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(GetMoveArt(aiMove));
+            int maxLines = Math.Max(playerLines.Length, aiLines.Length);
+            for (int i = 0; i < maxLines; i++)
+            {
+                string playerLine = i < playerLines.Length ? playerLines[i].PadRight(playerWidth) : new string(' ', playerWidth);
+                string aiLine = i < aiLines.Length ? aiLines[i].PadRight(aiWidth) : new string(' ', aiWidth);
+
+                Console.SetCursorPosition(leftPad, i + 1);
+                Console.Write(playerLine);
+
+                Console.SetCursorPosition(leftPad + playerWidth + separation, i + 1);
+                Console.Write(aiLine);
+            }
             Console.ResetColor();
-            Console.ForegroundColor = ConsoleColor.Cyan;
         }
 
 

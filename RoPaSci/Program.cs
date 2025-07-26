@@ -100,20 +100,19 @@ public class Program
             // Determine outcome
             AsciiScreen.PrintMoves(playerMove, aiMove);
 
-            Console.WriteLine($"\nYou chose: {playerMove}");
-            Console.WriteLine($"AI chose: {aiMove}");
-
             if (playerMove == aiMove)
             {
-                Console.WriteLine("It's a tie!");
+                AsciiScreen.ShowOutcome("It's a tie!");
             }
             else if (WinningMoves[playerMove].Contains(aiMove))
             {
-                Console.WriteLine("You win!");
+                AsciiScreen.ShowOutcome("You win!!");
+
             }
             else if (WinningMoves[aiMove].Contains(playerMove))
             {
-                Console.WriteLine("AI wins!");
+                AsciiScreen.ShowOutcome("AI wins!");
+
             }
             else
             {
