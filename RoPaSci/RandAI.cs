@@ -14,6 +14,23 @@ namespace RoPaSci
         {
             this.allowedMoves = allowedMoves;
         }
+
+        public virtual Program.Move GetMove()
+        {
+            return GetRandomMove();
+        }
+
+        public virtual void UpdateKnowledge(Program.Move playerMove)
+        {
+            // Random AI does not need to update knowledge
+        }
+
+        protected Program.Move GetRandomMove()
+        {
+            Random random = new();
+            int index = random.Next(allowedMoves.Count);
+            return allowedMoves[index];
+        }
     }
 
     // Create LastChoiceAI class here that extends RandAI
@@ -24,7 +41,25 @@ namespace RoPaSci
         {
             lastChoice = null;
         }
-        // Implement logic to remember the last choice and use it in the next move
+
+        public override Program.Move GetMove()
+        {
+            if (lastChoice.HasValue)
+            {
+                // Use the last choice logic to determine the next move
+                return lastChoice.Value;
+            }
+            else
+            {
+                // If no last choice, fallback to random move
+                return GetRandomMove();
+            }
+        }
+        public override void UpdateKnowledge(Program.Move playerMove)
+        {
+            // Update the last choice with the player's move
+            lastChoice = playerMove;
+        }
     }
 
 }

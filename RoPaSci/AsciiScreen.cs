@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Program;
 
 namespace RoPaSci
 {
@@ -63,7 +64,7 @@ namespace RoPaSci
             return -1;
         }
 
-        public static void ShowMoveChoice(List<Program.Move> allowedMoves)
+        public static Move ShowMoveChoice(List<Program.Move> allowedMoves)
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -78,20 +79,24 @@ namespace RoPaSci
             Console.ResetColor();
             // Here you would capture the input and handle the move selection
             int choice = -1;
+            
             while (choice < 1 || choice > allowedMoves.Count)
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 if (int.TryParse(keyInfo.KeyChar.ToString(), out choice) && choice >= 1 && choice <= allowedMoves.Count)
                 {
                     // Return zero-based index
-                    Console.WriteLine($"\nYou chose: {allowedMoves[choice - 1]}");
-                    return;
+                    //Console.WriteLine($"\nYou chose: {allowedMoves[choice - 1]}");
+                    return allowedMoves[choice - 1];
                 }
                 else
                 {
                     Console.Beep(); // Invalid input, beep sound
                 }
             }
+
+            return Move.None;
+            
         }
 
         public static void AskToPlayAgain()

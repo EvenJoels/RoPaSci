@@ -12,7 +12,8 @@ public class Program
         Paper,
         Scissors,
         Lizard,
-        Spock
+        Spock,
+        None
     }
 
     private static List<Move>? AllowedMoves;
@@ -73,8 +74,16 @@ public class Program
         while (gameRunning)
         {
             // AI decides move
+            Move aiMove = SelectedAI.GetMove();
             // Get player input
-            AsciiScreen.ShowMoveChoice(AllowedMoves);
+            Move playerMove = AsciiScreen.ShowMoveChoice(AllowedMoves);
+            // Determine outcome
+            Console.WriteLine($"\nYou chose: {playerMove}");
+            Console.WriteLine($"AI chose: {aiMove}");
+
+
+            // Update AI knowledge with player move
+            SelectedAI.UpdateKnowledge(playerMove);
 
             // Ask if the player wants to continue
             AsciiScreen.AskToPlayAgain();
