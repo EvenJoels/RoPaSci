@@ -9,6 +9,144 @@ namespace RoPaSci
 {
     public class AsciiScreen
     {
+
+        // String for "rock" ascii art
+        private const string RockArt = @"                                                 
+                  @@@@@@@@@@@@@                  
+              @@@               @@@              
+           @@                       @@           
+         @@                        @@ #@         
+       @@                        @@     @@       
+     -@               +@@@@@@@@@@         @@     
+    @@          @@@@@%                     @@    
+   .@         @@                            @@   
+   @         @@                              @   
+  @@         @  @                            @@  
+  @          @  @                         %@@ @  
+  @          @ @   @                    @@    @  
+  @         @@ @  @                   @       @  
+  @         @@ @  @  @     @ @@       @       @  
+  @+          @  %@  @     @@  @@     @       @  
+   @           @%@   @    @ @  @     @@      @#  
+   @#            @  @*   @    +@    @@       @   
+    @@            @@@       .@@    @@       @    
+     @@              @@@@@@@  @@@@        @@     
+      *@                  @@*            @@      
+        @@                             @@        
+          @@                         @@          
+             @@=                  @@:            
+                @@@@@@@@#@@@@@@@@                
+                                                 ";
+
+        private const string PaperArt = @"                                                 
+                @@@@@@+...+@@@@@@                
+             @@                   @@%            
+          @@@@                       @@          
+        @@    @@                       @@        
+      @@         @@@#                    @@      
+     @+              @@@@                 #@     
+    @                    @@@                @    
+   @*@@                     %@@              @   
+  +@   @*                 @    @@            @-  
+  @     *@                 @@    @            @  
+  @       @              @@  =@@  #@          @  
+  @       @           @@   @@   @@@@          @  
+  @       @@            @@.   @@    @         @  
+  @         @@     @@      @@    @@@          @  
+  @@          @@    @@@@     @@    @         @@  
+   @            @@   @  @@#    %@@@          @   
+   -@            =@@@@     @@@@@            @.   
+    @@                                     @@    
+     .@                                   @      
+       @@                               @@       
+         @@                           @@         
+           @@                       @@           
+              @@@.             :@@@              
+                  *@@@@@@@@@@@+                  
+                                                 ";
+
+        private const string ScissorArt = @"                                                 
+                 @@@@@@@@@@@@@@@@                
+             @@@                  @@@            
+          @@@                        @@          
+        @@                             @@        
+       @                                 @@      
+     @@                                    @     
+    @@     @@                 @@@@@         @    
+    @    @*   @@@@@-       @@*      @@#      @   
+   @      @@        @@@@@-@            @@@@@@@@  
+  %@         @@@         @     @@             @  
+  @              @@@     @=   @ @             @  
+  @                  @@@  @   @ @             @@ 
+  @         @@@@@@@@@      @@@  @@            @- 
+  @*   @.                         @@@         @  
+   @   @              :@@@@@@@@@              @  
+   @    @@@@@@@@@@@@          @@@            @@  
+    @              @      =@@@   @      @@  =@   
+     @              @@@@@@      @     @@    @    
+      @               @      *@@@@@@@@    @@     
+       @@               @@@@@            @       
+         @@                            @@        
+           @@.                      @@*          
+              @@@               *@@@             
+                  +@@@@@@@@@@@@                  
+                                                 ";
+
+        private const string LizardArt = @"                                                 
+                *@@@@@@@@@@@@@@@%                
+             @@#                 +@@             
+          @@                         @@          
+        @@              =              @@        
+      +@            @@@   *@@#           @%      
+     @@         @@@    #@@@@   @@@        @@     
+    @-       @@@  =@@@@      @@@   @@@      @    
+   @       -@                    @@@  @@     @   
+   @       @           .%=           @@      @:  
+  @        @        @@       :@@@@@@@@        @  
+  @       @@         @     @@@    @           @  
+  @       @            @@.       @@           @  
+  @       @                    @@             @  
+  @      @=                  @@               @  
+  @@     @                @@                 @@  
+   @     @              @@                   @   
+   =@    #@           @@                    @#   
+    @@    @           @                    @@    
+     -@   @           @                   @#     
+       @@ %@          @                 @@       
+         @@@          @               =@         
+           @@         @             @@           
+             .@@@     @         @@@:             
+                  @@@@@@@@@@@@@                  
+                                                 ";
+
+        private const string SpockArt = @"                                                 
+                  @@@@@@@@@@@@@@                 
+             =@@%                @@@             
+           @@                        @@          
+         @@           @@@@             @@        
+       @@         .@@@    @     @@@@     @@      
+      @           @   @   @    @   @      -@     
+    *@            @   @   @   @    @@@      @    
+    @             @   @   @@ @@   @  @@      @   
+   @              @    @   @ @   @   @       @@  
+  -@              @    @   @@   %@  @#        @  
+  @:              @    @   @    @   @         @  
+  @               @   @@@@    @@@  @@         @@ 
+  @     @@@@      @             @  @          @* 
+  @:   @     @@   @                 @         @  
+  .@   @:       @@@                 @         @  
+   @     @@         .@@@           :@        @@  
+    @      @@           @@         @         @   
+    +@       @@           @        @        @    
+      @       %@          %@      @       *@     
+       @@       @@              @@       @@      
+         @=       @@            @      @@        
+           @@     @@            @    @@          
+             @@@. @=            @+@@             
+                  @@@@@@@@@@@@@@                 
+                                                 ";
+
+
         public static void SetUpConsole()
         {
             Console.OutputEncoding = Encoding.UTF8;
@@ -124,6 +262,35 @@ namespace RoPaSci
                 }
             } while (true);
 
+        }
+
+        public static string GetMoveArt(Move move)
+        {
+            return move switch
+            {
+                Move.Rock => RockArt,
+                Move.Paper => PaperArt,
+                Move.Scissors => ScissorArt,
+                Move.Lizard => LizardArt,
+                Move.Spock => SpockArt,
+                _ => "Invalid Move"
+            };
+        }
+
+        public static void PrintMoves(Move playerMove, Move aiMove)
+        {
+            // Should display the ascii art for both moves side by side
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            WriteCentredText("Your Move:", 2);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(GetMoveArt(playerMove));
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            WriteCentredText("AI's Move:", 2 + GetMoveArt(playerMove).Split('\n').Length + 1);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(GetMoveArt(aiMove));
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Cyan;
         }
 
 

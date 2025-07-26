@@ -98,6 +98,8 @@ public class Program
             // Get player input
             Move playerMove = AsciiScreen.ShowMoveChoice(AllowedMoves);
             // Determine outcome
+            AsciiScreen.PrintMoves(playerMove, aiMove);
+
             Console.WriteLine($"\nYou chose: {playerMove}");
             Console.WriteLine($"AI chose: {aiMove}");
 
