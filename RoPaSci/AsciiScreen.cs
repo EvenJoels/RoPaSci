@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoPaSci
 {
-    internal class AsciiScreen
+    public class AsciiScreen
     {
         public static void SetUpConsole()
         {
@@ -63,6 +63,63 @@ namespace RoPaSci
             return -1;
         }
 
+        public static void ShowMoveChoice(List<Program.Move> allowedMoves)
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            WriteCentredText("Choose Your Move", 2);
+            Console.ForegroundColor = ConsoleColor.White;
+            for (int i = 0; i < allowedMoves.Count; i++)
+            {
+                WriteCentredText($"{i + 1}. {allowedMoves[i]}", 4 + i);
+            }
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            WriteCentredText("Press the corresponding number to select...", 4 + allowedMoves.Count + 1);
+            Console.ResetColor();
+            // Here you would capture the input and handle the move selection
+            int choice = -1;
+            while (choice < 1 || choice > allowedMoves.Count)
+            {
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                if (int.TryParse(keyInfo.KeyChar.ToString(), out choice) && choice >= 1 && choice <= allowedMoves.Count)
+                {
+                    // Return zero-based index
+                    Console.WriteLine($"\nYou chose: {allowedMoves[choice - 1]}");
+                    return;
+                }
+                else
+                {
+                    Console.Beep(); // Invalid input, beep sound
+                }
+            }
+        }
+
+        public static void AskToPlayAgain()
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            WriteCentredText("Do you want to play again? (Y/N)", Console.WindowHeight - 2);
+            Console.ResetColor();
+
+            ConsoleKeyInfo consoleKeyInfo;
+            do
+            {
+                consoleKeyInfo = Console.ReadKey(true);
+                if (consoleKeyInfo.Key == ConsoleKey.Y)
+                {
+                    Console.Clear();
+                    return; // Restart the game
+                }
+                else if (consoleKeyInfo.Key == ConsoleKey.N)
+                {
+                    Environment.Exit(0); // Exit the game
+                }
+                else
+                {
+                    Console.Beep(); // Invalid input, beep sound
+                }
+            } while (true);
+
+        }
 
 
         private static void WriteCentredText(string text, int row)
@@ -71,5 +128,6 @@ namespace RoPaSci
             Console.SetCursorPosition(leftPad, row);
             Console.Write(text);
         }
+
     }
 }

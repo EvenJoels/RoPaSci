@@ -68,8 +68,17 @@ public class Program
         }
 
 
-
         // Game loop
+        bool gameRunning = true;
+        while (gameRunning)
+        {
+            // AI decides move
+            // Get player input
+            AsciiScreen.ShowMoveChoice(AllowedMoves);
+
+            // Ask if the player wants to continue
+            AsciiScreen.AskToPlayAgain();
+        }
 
 
         Console.WriteLine("\nPress any key to exit...");
