@@ -45,6 +45,32 @@ namespace RoPaSci
         {
             if (lastChoice.HasValue)
             {
+                return lastChoice.Value;
+            }
+            else
+            {
+                // no last choice
+                return GetRandomMove();
+            }
+        }
+        public override void UpdateKnowledge(Program.Move playerMove)
+        {
+            lastChoice = playerMove;
+        }
+    }
+
+    internal class CounterLastChoiceAI : RandAI
+    {
+        private Program.Move? lastChoice;
+        public CounterLastChoiceAI(List<Program.Move> allowedMoves) : base(allowedMoves)
+        {
+            lastChoice = null;
+        }
+
+        public override Program.Move GetMove()
+        {
+            if (lastChoice.HasValue)
+            {
                 // Use the last choice logic to determine the next move using losing moves from allowed moves
                 var losingMoves = Program.LosingMoves[lastChoice.Value];
                 var validLosingMoves = losingMoves.Where(move => allowedMoves.Contains(move)).ToList();

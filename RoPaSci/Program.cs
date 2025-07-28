@@ -73,7 +73,8 @@ public class Program
             List<string> aiTypes =
             [
                 "Random AI",
-                "Last Choice AI"
+                "Last Choice AI",
+                "Counter Last Choice AI"
             ];
             int aiType = AsciiScreen.GameSetUpChoice(aiTypes);
             switch (aiType)
@@ -85,6 +86,10 @@ public class Program
                 case 1:
                     // Initialize Last Choice AI
                     SelectedAI = new LastChoiceAI(AllowedMoves);
+                    break;
+                case 2:
+                    // Initialize Counter Last Choice AI
+                    SelectedAI = new CounterLastChoiceAI(AllowedMoves);
                     break;
                 default:
                     return;
