@@ -46,86 +46,94 @@ public class Program
         AsciiScreen.SetUpConsole();
         AsciiScreen.ShowWelcomeScreen();
 
-        // Ask game mode
-        List<string> gameModes =
-        [
-            "Rock, Paper, Scissors",
-            "Rock, Paper, Scissors, Lizard, Spock",
-        ];
-        int gameMode = AsciiScreen.GameSetUpChoice(gameModes);
-        switch (gameMode)
+        try 
         {
-            case 0:
-                // Initialize game logic for RPS
-                AllowedMoves = [Move.Rock, Move.Paper, Move.Scissors];
-                break;
-            case 1:
-                // Initialize game logic for RPSLS
-                AllowedMoves = [Move.Rock, Move.Paper, Move.Scissors, Move.Lizard, Move.Spock];
-                break;
-            default:
-                return;
+            // Ask game mode
+            List<string> gameModes =
+            [
+                "Rock, Paper, Scissors",
+                "Rock, Paper, Scissors, Lizard, Spock",
+            ];
+            int gameMode = AsciiScreen.GameSetUpChoice(gameModes);
+            switch (gameMode)
+            {
+                case 0:
+                    // Initialize game logic for RPS
+                    AllowedMoves = [Move.Rock, Move.Paper, Move.Scissors];
+                    break;
+                case 1:
+                    // Initialize game logic for RPSLS
+                    AllowedMoves = [Move.Rock, Move.Paper, Move.Scissors, Move.Lizard, Move.Spock];
+                    break;
+                default:
+                    return;
+            }
+
+            // Ask AI type
+            List<string> aiTypes =
+            [
+                "Random AI",
+                "Last Choice AI"
+            ];
+            int aiType = AsciiScreen.GameSetUpChoice(aiTypes);
+            switch (aiType)
+            {
+                case 0:
+                    // Initialize Random AI
+                    SelectedAI = new RandAI(AllowedMoves);
+                    break;
+                case 1:
+                    // Initialize Last Choice AI
+                    SelectedAI = new LastChoiceAI(AllowedMoves);
+                    break;
+                default:
+                    return;
+            }
+
+            // Game loop
+            bool gameRunning = true;
+            while (gameRunning)
+            {
+                // AI decides move
+                Move aiMove = SelectedAI.GetMove();
+                // Get player input
+                Move playerMove = AsciiScreen.ShowMoveChoice(AllowedMoves);
+                // Determine outcome
+                AsciiScreen.PrintMoves(playerMove, aiMove);
+
+                if (playerMove == aiMove)
+                {
+                    AsciiScreen.ShowOutcome("It's a tie!");
+                }
+                else if (WinningMoves[playerMove].Contains(aiMove))
+                {
+                    AsciiScreen.ShowOutcome("You win!!");
+
+                }
+                else if (WinningMoves[aiMove].Contains(playerMove))
+                {
+                    AsciiScreen.ShowOutcome("AI wins!");
+
+                }
+                else
+                {
+                    // Something went wrong, perhaps invalid move
+                    continue;
+                }
+
+                // Update AI knowledge with player move
+                SelectedAI.UpdateKnowledge(playerMove);
+
+                // Ask if the player wants to continue
+                AsciiScreen.AskToPlayAgain();
+            }
+        }
+        catch (InvalidOperationException ex)
+        {
+            AsciiScreen.DisplayError(ex.Message);
         }
 
-        // Ask AI type
-        List<string> aiTypes =
-        [
-            "Random AI",
-            "Last Choice AI"
-        ];
-        int aiType = AsciiScreen.GameSetUpChoice(aiTypes);
-        switch (aiType)
-        {
-            case 0:
-                // Initialize Random AI
-                SelectedAI = new RandAI(AllowedMoves);
-                break;
-            case 1:
-                // Initialize Last Choice AI
-                SelectedAI = new LastChoiceAI(AllowedMoves);
-                break;
-            default:
-                return;
-        }
 
-
-        // Game loop
-        bool gameRunning = true;
-        while (gameRunning)
-        {
-            // AI decides move
-            Move aiMove = SelectedAI.GetMove();
-            // Get player input
-            Move playerMove = AsciiScreen.ShowMoveChoice(AllowedMoves);
-            // Determine outcome
-            AsciiScreen.PrintMoves(playerMove, aiMove);
-
-            if (playerMove == aiMove)
-            {
-                AsciiScreen.ShowOutcome("It's a tie!");
-            }
-            else if (WinningMoves[playerMove].Contains(aiMove))
-            {
-                AsciiScreen.ShowOutcome("You win!!");
-
-            }
-            else if (WinningMoves[aiMove].Contains(playerMove))
-            {
-                AsciiScreen.ShowOutcome("AI wins!");
-
-            }
-            else
-            {
-                // Something went wrong, perhaps invalid move
-                continue;
-            }
-
-            // Update AI knowledge with player move
-            SelectedAI.UpdateKnowledge(playerMove);
-
-            // Ask if the player wants to continue
-            AsciiScreen.AskToPlayAgain();
-        }
 
 
         Console.WriteLine("\nPress any key to exit...");

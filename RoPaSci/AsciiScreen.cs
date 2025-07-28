@@ -198,7 +198,7 @@ namespace RoPaSci
                 }
             }
 
-            return -1;
+            throw new InvalidOperationException("Invalid choice made during game setup.");
         }
 
         public static Move ShowMoveChoice(List<Program.Move> allowedMoves)
@@ -226,11 +226,11 @@ namespace RoPaSci
                 else
                 {
                     Console.Beep(); // Invalid input
+                    break;
                 }
             }
 
-            return Move.None;
-            
+            throw new InvalidOperationException("Invalid move choice made.");
         }
 
         public static void ShowOutcome(string outcome)
@@ -328,6 +328,12 @@ namespace RoPaSci
             Console.ResetColor();
         }
 
+        public static void DisplayError(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            WriteCentredText("Error: " + message, Console.WindowHeight / 2);
+            Console.ResetColor();
+        }
 
         private static void WriteCentredText(string text, int row)
         {
