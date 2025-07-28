@@ -183,22 +183,21 @@ namespace RoPaSci
             Console.ForegroundColor = ConsoleColor.Cyan;
             WriteCentredText("Press the corresponding number to select...", 8);
             Console.ResetColor();
-            // Here you would capture the input and handle the game mode selection
+
             int choice = -1;
             while (choice < 1 || choice > choices.Count)
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 if (int.TryParse(keyInfo.KeyChar.ToString(), out choice) && choice >= 1 && choice <= choices.Count)
                 {
-                    return choice - 1; // Return zero-based index
+                    return choice - 1; 
                 }
                 else
                 {
-                    Console.Beep(); // Invalid input, beep sound
+                    Console.Beep(); // Invalid input
                 }
             }
 
-            // If we reach here, it means the input was invalid
             return -1;
         }
 
@@ -215,20 +214,18 @@ namespace RoPaSci
             Console.ForegroundColor = ConsoleColor.Cyan;
             WriteCentredText("Press the corresponding number to select...", 4 + allowedMoves.Count + 1);
             Console.ResetColor();
-            // Here you would capture the input and handle the move selection
+
             int choice = -1;
             while (choice < 1 || choice > allowedMoves.Count)
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 if (int.TryParse(keyInfo.KeyChar.ToString(), out choice) && choice >= 1 && choice <= allowedMoves.Count)
                 {
-                    // Return zero-based index
-                    //Console.WriteLine($"\nYou chose: {allowedMoves[choice - 1]}");
                     return allowedMoves[choice - 1];
                 }
                 else
                 {
-                    Console.Beep(); // Invalid input, beep sound
+                    Console.Beep(); // Invalid input
                 }
             }
 

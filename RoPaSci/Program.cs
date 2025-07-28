@@ -35,8 +35,8 @@ public class Program
         foreach (Move move in WinningMoves.Keys)
         {
             LosingMoves[move] = WinningMoves.Where(
-                kv => kv.Value.Contains(move)
-                ).Select(kv => kv.Key).ToList();
+                keyval => keyval.Value.Contains(move)
+                ).Select(keyval => keyval.Key).ToList();
         }
     }
 

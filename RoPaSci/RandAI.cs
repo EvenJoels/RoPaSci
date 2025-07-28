@@ -8,7 +8,6 @@ namespace RoPaSci
 {
     internal class RandAI
     {
-        // Change the access modifier of allowedMoves from private to protected
         protected List<Program.Move> allowedMoves;
 
         public RandAI(List<Program.Move> allowedMoves)
@@ -34,7 +33,6 @@ namespace RoPaSci
         }
     }
 
-    // Create LastChoiceAI class here that extends RandAI
     internal class LastChoiceAI : RandAI
     {
         private Program.Move? lastChoice;
@@ -49,30 +47,27 @@ namespace RoPaSci
             {
                 // Use the last choice logic to determine the next move using losing moves from allowed moves
                 var losingMoves = Program.LosingMoves[lastChoice.Value];
-                // Filter losing moves to only those that are allowed
                 var validLosingMoves = losingMoves.Where(move => allowedMoves.Contains(move)).ToList();
                 if (validLosingMoves.Count > 0)
                 {
-                    // Randomly select one of the valid losing moves
                     Random random = new();
                     int index = random.Next(validLosingMoves.Count);
                     return validLosingMoves[index];
                 }
                 else
                 {
-                    // If no valid losing moves, fallback to random move
+                    // no valid move that will win against last choice
                     return GetRandomMove();
                 }
             }
             else
             {
-                // If no last choice, fallback to random move
+                // no last choice
                 return GetRandomMove();
             }
         }
         public override void UpdateKnowledge(Program.Move playerMove)
         {
-            // Update the last choice with the player's move
             lastChoice = playerMove;
         }
     }
