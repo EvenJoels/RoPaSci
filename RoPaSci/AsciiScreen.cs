@@ -226,7 +226,6 @@ namespace RoPaSci
                 else
                 {
                     Console.Beep(); // Invalid input
-                    break;
                 }
             }
 
